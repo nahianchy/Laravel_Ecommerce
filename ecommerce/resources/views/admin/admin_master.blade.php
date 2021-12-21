@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +19,8 @@
     <link rel="stylesheet" href="{{ asset('backend/css/skin_color.css') }}">
 
     {{-- toaster --}}
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 </head>
 
@@ -61,6 +63,9 @@
     <script src="{{ asset('../assets/vendor_components/apexcharts-bundle/irregular-data-series.js') }}"></script>
     <script src="{{ asset('../assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
 
+    <script src="{{ asset('../assets/vendor_components/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('backend/js/pages/data-table.js') }}"></script>
+
     <!-- Sunny Admin App -->
     <script src="{{ asset('backend/js/template.js') }}"></script>
     <script src="{{ asset('backend/js/pages/dashboard.js') }}"></script>
@@ -70,29 +75,60 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script type="text/javascript">
+        @if (Session::has('message'))
+        
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch(type){
+        
+            case 'info' :
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'success' :
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'warning' :
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'error' :
+            toastr.error(" {{ Session::get('message') }} ");
+            break;
+            }
+        @endif
+    </script>
 
-      @if(Session::has('message'))
+    {{-- sweetalert delete function --}}
 
-      var type = "{{ Session::get('alert-type','info')}}"
-      switch(type){
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        case 'info' :
-        toastr.info(" {{ Session::get('message') }} ");
-        break;
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('click','#delete',function(e) {
+                e.preventDefault();
+                var link = $(this).attr("href");
 
-        case 'success' :
-        toastr.success(" {{ Session::get('message') }} ");
-        break;
-
-        case 'warning' :
-        toastr.warning(" {{ Session::get('message') }} ");
-        break;
-
-        case 'error' :
-        toastr.error(" {{ Session::get('message') }} ");
-        break;
-      }
-      @endif
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href = link
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                });
+            });
+        });
 
     </script>
 
