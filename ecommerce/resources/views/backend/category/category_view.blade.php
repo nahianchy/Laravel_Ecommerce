@@ -36,10 +36,10 @@
 
                                              
                                                 <td>
-                                                    {{-- <a href="{{ route('category.edit', $item->id) }}"
+                                                    <a href="{{ route('category.edit', $item->id) }}"
                                                         class="btn btn-info btn-sm">Edit</a>
                                                     <a href="{{ route('category.delete', $item->id) }}" id="delete"
-                                                        class="btn btn-danger btn-sm">Delete</a> --}}
+                                                        class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
 
                                             </tr>
@@ -66,7 +66,7 @@
 
                         <div class="box-body">
                             <div class="table-responsive">
-                                {{-- <form method='post' action="{{ route('category.store') }}"> --}}
+                                <form method='post' action="{{ route('category.store') }}">
                                     @csrf
                                     <div class="form-group">
                                         <h5>Category Name English<span class="text-danger">*</span></h5>
